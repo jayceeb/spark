@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  master:
+    build: .
+    image: spark:1.6.2-csd
+    container_name: master
+    ports:
+      - "8080:8080"
+    command: ["spark-class", "org.apache.spark.deploy.master.Master"]
+
+  slave:
+    image: spark:1.6.2-csd
+    depends_on:
+      - master
+    command: ["spark-class", "org.apache.spark.deploy.worker.Worker", "spark://master:7077", "-m", "1G"]

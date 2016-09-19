@@ -1,0 +1,11 @@
+FROM sequenceiq/hadoop-docker:2.6.0
+
+ADD dist /usr/share/spark
+WORKDIR /usr/share/spark
+
+ENV SPARK_HOME /usr/share/spark
+
+EXPOSE 4040 8080
+
+# CMD ["./sbin/start-master.sh"]
+CMD ["bin/spark-class", "org.apache.spark.deploy.master.Master"]
